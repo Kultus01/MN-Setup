@@ -1,16 +1,16 @@
 #!/bin/bash
 
-sudo touch /var/swap.img
+#sudo touch /var/swap.img
 
-sudo chmod 600 /var/swap.img
+#sudo chmod 600 /var/swap.img
 
-sudo dd if=/dev/zero of=/var/swap.img bs=1024k count=2000
+#sudo dd if=/dev/zero of=/var/swap.img bs=1024k count=2000
 
-mkswap /var/swap.img
+#mkswap /var/swap.img
 
-sudo swapon /var/swap.img
+#sudo swapon /var/swap.img
 
-sudo echo "/var/swap.img none swap sw 0 0" >> /etc/fstab
+#sudo echo "/var/swap.img none swap sw 0 0" >> /etc/fstab
 
 sudo apt-get update -y
 
@@ -30,48 +30,30 @@ sudo apt-get update -y
 
 sudo apt-get install libdb4.8-dev libdb4.8++-dev -y
 
-wget https://github.com/luckybitcoin/luckycore/releases/download/v1.0/Ubuntu-16-04.tar.gz 
+sudo wget https://github.com/luckybitcoin/luckycore/releases/download/v1.0/Ubuntu-16-04.tar.gz 
 
-chmod -R 755 /root/Ubuntu-16-04.tar.gz
+sudo chmod -R 755 /home/lucky/Ubuntu-16-04.tar.gz
 
-tar xvzf /root/Ubuntu-16-04.tar.gz
+sudo tar xvzf /home/lucky/Ubuntu-16-04.tar.gz
 
-mkdir /root/luckybit
+sudo mkdir /home/lucky/luckybit
 
-mkdir /root/.luckybitcore
+sudo mkdir /home/lucky/.luckybitcore
 
-cp /root/luckybit-cli /root/luckybit
+sudo cp /home/lucky/luckybit-cli /home/lucky/luckybit
 
-cp /root/luckybitd /root/luckybit
+sudo cp /home/lucky/luckybitd /home/lucky/luckybit
 
-chmod -R 755 /root/luckybit
+sudo chmod -R 755 /home/lucky/luckybit
 
-chmod -R 755 /root/.luckybitcore
+sudo chmod -R 755 /home/lucky/.luckybitcore
 
-sudo apt-get install -y pwgen
+sudo sudo apt-get install -y pwgen
 
-GEN_PASS=`pwgen -1 20 -n`
+sudo GEN_PASS=`pwgen -1 20 -n`
 
-IP_ADD=`curl ipinfo.io/ip`
+sudo IP_ADD=`curl ipinfo.io/ip`
 
-echo -e "rpcuser=luckybitrpc\nrpcpassword=${GEN_PASS}\nserver=1\nlisten=1\nmaxconnections=256\ndaemon=1\nrpcallowip=127.0.0.1\nexternalip=${IP_ADD}" > /root/.luckybitcore/luckybit.conf
+sudo echo -e "rpcuser=luckybitrpc\nrpcpassword=${GEN_PASS}\nserver=1\nlisten=1\nmaxconnections=256\ndaemon=1\nrpcallowip=127.0.0.1\nexternalip=${IP_ADD}" > /root/.luckybitcore/luckybit.conf
 
-cd /root/luckybit
-
-./luckybitd
-
-sleep 10
-
-masternodekey=$(./luckybit-cli masternode genkey)
-
-./luckybit-cli stop
-
-echo -e "masternode=1\nmasternodeprivkey=$masternodekey" >> /root/.luckybitcore/luckybit.conf
-
-./luckybitd -daemon
-
-cd /root/.luckybitcore
-
-echo "Masternode private key: $masternodekey"
-
-echo "GOOD LUCK"
+cd /home/lucky/luckybit
